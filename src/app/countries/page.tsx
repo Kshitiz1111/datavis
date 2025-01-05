@@ -24,7 +24,7 @@ export default async function CountriesPage() {
   const countries: SingleCountryType[] = data?.countries || [];
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 px-4">
       <h1 className="text-xl font-bold mb-8">Countries of the World</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {countries?.map((country: SingleCountryType) => (

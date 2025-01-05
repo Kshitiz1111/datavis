@@ -40,7 +40,6 @@ const continentSlice = createSlice({
       state.selectedContinentCode = action.payload;
     },
     setLanugageCount: (state, action: PayloadAction<LanguageCountType | undefined>) => {
-      console.log("payload", action.payload)
       state.continentLanguageCount = action.payload;
     },
   },

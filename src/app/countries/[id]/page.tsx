@@ -19,7 +19,7 @@ export default function CountryPage() {
   const country: CountryDetailsType = data?.country;
   console.log(data)
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold mb-8">
         {country?.emoji} {country?.name}
       </h1>
