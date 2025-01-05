@@ -3,7 +3,6 @@
 import { useLazyQuery, useQuery } from "@apollo/client"
 import { ResponsiveCirclePacking } from "@nivo/circle-packing"
 import { GET_COUNTRIES_AND_LANGUAGES, GET_LANGUAGES_BY_CONTINENT } from "@/lib/queries"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { GetCountriesAndLanguagesType, GetLanguagesByContinentType } from "@/types/queries"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "@/lib/hooks"
@@ -13,20 +12,20 @@ import { setLanugageCount } from "@/lib/features/continentSlice"
 
 
 const LanguageCircleChart = ({ continentCode }: { continentCode: string }) => {
+
   const { continentLanguageCount } = useAppSelector((state: RootState) => state.continent)
   const dispatch = useAppDispatch();
 
-
   const { loading, error, data } = useQuery<GetCountriesAndLanguagesType>(GET_COUNTRIES_AND_LANGUAGES, { skip: continentCode !== "all" })
 
-  const [fetchContinentLangs, { loading: loadingContinentLangs, error: errorContinentLangs, data: continentLangs }] = useLazyQuery<GetLanguagesByContinentType>(GET_LANGUAGES_BY_CONTINENT)
+  const [fetchContinentLangs, { loading: loadingContinentLangs, data: continentLangs }] = useLazyQuery<GetLanguagesByContinentType>(GET_LANGUAGES_BY_CONTINENT)
+
 
   useEffect(() => {
     if (continentCode !== "all") {
       fetchContinentLangs({ variables: { code: continentCode } })
     }
   }, [continentCode])
-
 
   useEffect(() => {
     if (continentCode !== "all") {
@@ -41,7 +40,7 @@ const LanguageCircleChart = ({ continentCode }: { continentCode: string }) => {
 
 
   if (loading) return <div className="w-full sm:h-[500px] h-[300px] flex items-center justify-center">Loading...</div>;
-  if (error) return <div className="w-full h-[500px] flex items-center justify-center text-red-500">Error: {error.message}</div>;
+  if (error) return <div className="w-full h-[500px] flex items-center justify-center text-red-500">Error: {error?.message}</div>;
 
   const chartData = {
     name: "Languages",

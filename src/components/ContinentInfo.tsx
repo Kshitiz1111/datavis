@@ -3,10 +3,10 @@ import { GetContinentsWithCountriesType, GetContinentWithCountriesType } from "@
 
 const ContinentInfo = ({ data }: { data: GetContinentsWithCountriesType | GetContinentWithCountriesType | undefined }) => {
 
-  const transformedData = (data?.continents) ?
+  const transformedData = (data && 'continents' in data) ?
     {
       totalContinentCount: data?.continents?.length,
-      nameOfContinents: data?.continents.map((continent) => continent?.name),
+      nameOfContinents: data?.continents?.map((continent) => continent?.name),
       continents: data?.continents
     }
     :
@@ -16,12 +16,10 @@ const ContinentInfo = ({ data }: { data: GetContinentsWithCountriesType | GetCon
       nameOfCountries: data?.continent?.countries?.map((country) => country.name)
     }
 
-  // console.log("transformedData", transformedData)
-
   return (
     <Card className="w-full h-full overflow-auto">
       <CardHeader>
-        <CardTitle>There are {transformedData?.continents ? transformedData.totalContinentCount : transformedData?.totalContriesCount} {transformedData?.continents ? "Continents" : "Countries"} in {transformedData?.continents ? "Total" : transformedData?.nameOfContinent}</CardTitle>
+        <CardTitle>There are {transformedData?.continents ? transformedData?.totalContinentCount : transformedData?.totalContriesCount} {transformedData?.continents ? "Continents" : "Countries"} in {transformedData?.continents ? "Total" : transformedData?.nameOfContinent}</CardTitle>
       </CardHeader>
       <CardContent>
         <p className="mb-2">Code: { }</p>

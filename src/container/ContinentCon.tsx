@@ -6,11 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { GET_CONTINENTS, GET_CONTINENTS_WITH_COUNTRIES, GET_CONTINENT_WITH_COUNTRIES, GET_COUNTRIES_AND_LANGUAGES } from "@/lib/queries";
+import { GET_CONTINENTS, GET_CONTINENTS_WITH_COUNTRIES, GET_CONTINENT_WITH_COUNTRIES } from "@/lib/queries";
 import { useLazyQuery, useQuery } from "@apollo/client";
-import { GetContinentsType, GetContinentsWithCountriesType, GetContinentWithCountriesType, GetCountriesAndLanguagesType } from "@/types/queries";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { GetContinentsType, GetContinentsWithCountriesType, GetContinentWithCountriesType } from "@/types/queries";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { setAllContinentsData, setSelectedContinentCode, setSelectedContinentData } from "@/lib/features/continentSlice";
@@ -21,7 +20,7 @@ import LanguageCircleChart from "@/components/LanguageCircleChart";
 
 const ContinentCon = () => {
   const dispatch = useAppDispatch();
-  const { selectedContinentCode, allContinentsData, selectedContinentData, loading } = useAppSelector((state: RootState) => state.continent);
+  const { selectedContinentCode, allContinentsData, selectedContinentData } = useAppSelector((state: RootState) => state.continent);
 
   const { loading: loadingContinentsCountriesList, error: errorContinentsCountries, data: ContinentsCountriesList } = useQuery<GetContinentsWithCountriesType | undefined>(GET_CONTINENTS_WITH_COUNTRIES, { skip: selectedContinentCode !== 'all' });
 
@@ -35,7 +34,10 @@ const ContinentCon = () => {
     }
     dispatch(setSelectedContinentCode(value))
   }
-
+  console.log(loadingContinentsCountriesList,
+    errorContinentsCountries,
+    error,
+    loadingContinent,)
   useEffect(() => {
     if (selectedContinentCode !== 'all' && continentData) {
       dispatch(setSelectedContinentData(continentData))

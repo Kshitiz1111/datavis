@@ -56,6 +56,10 @@ export type SingleCountryType = {
   emojiU: string
 }
 export type LanguageCountType = Record<string, number>;
+
+type State = {
+  name: string
+}
 export type CountryDetailsType = {
   continent: {
     name: string;

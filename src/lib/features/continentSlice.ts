@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetContinentsWithCountriesType, GetContinentWithCountriesType, GetCountriesAndLanguagesType, LanguageCountType } from "@/types/queries";
+import { GetContinentsWithCountriesType, GetContinentWithCountriesType, LanguageCountType } from "@/types/queries";
 
 // Define the type for the slice state
 interface ContinentState {

@@ -1,11 +1,11 @@
-import { gql } from '@apollo/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import createApolloClient from '../../../apollo-client';
 import { GET_ALL_COUNTRIES } from '@/lib/queries';
 import { SingleCountryType } from '@/types/queries';
 
-export const revalidate = 2592000;
+
+export const revalidate = 2592000;//revaidate each month
 
 function UnicodeFlagFromEmojiU({ emojiU }: { emojiU: string }) {
   const codePoints = emojiU.split(' ').map(u => parseInt(u.slice(2), 16));
@@ -27,17 +27,17 @@ export default async function CountriesPage() {
     <div className="container mx-auto py-8">
       <h1 className="text-xl font-bold mb-8">Countries of the World</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {countries.map((country: Country) => (
-          <Link key={country.code} href={`/countries/${country.code}`}>
+        {countries?.map((country: SingleCountryType) => (
+          <Link key={country?.code} href={`/countries/${country?.code}`}>
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <UnicodeFlagFromEmojiU emojiU={country.emojiU} />
-                  {country.name}
+                  <UnicodeFlagFromEmojiU emojiU={country?.emojiU} />
+                  {country?.name}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">Code: {country.code}</p>
+                <p className="text-sm text-muted-foreground">Code: {country?.code}</p>
               </CardContent>
             </Card>
           </Link>
