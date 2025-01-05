@@ -42,3 +42,29 @@ export type GetLanguagesByContinentType = {
     }[];
   };
 };
+
+export type Language = {
+  name: string;
+}
+export type Country = {
+  languages: Language[];
+}
+export type SingleCountryType = {
+  code: string
+  name: string
+  emoji: string
+  emojiU: string
+}
+export type LanguageCountType = Record<string, number>;
+export type CountryDetailsType = {
+  continent: {
+    name: string;
+  };
+  currency: string;
+  emojiU: string;
+  emoji: string;
+  name: string;
+  native: string;
+  phone: string;
+  states: State[];
+}

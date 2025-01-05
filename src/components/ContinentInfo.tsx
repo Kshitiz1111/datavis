@@ -16,7 +16,7 @@ const ContinentInfo = ({ data }: { data: GetContinentsWithCountriesType | GetCon
       nameOfCountries: data?.continent?.countries?.map((country) => country.name)
     }
 
-  console.log("transformedData", transformedData)
+  // console.log("transformedData", transformedData)
 
   return (
     <Card className="w-full h-full overflow-auto">

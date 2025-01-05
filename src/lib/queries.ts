@@ -52,3 +52,32 @@ export const GET_LANGUAGES_BY_CONTINENT = gql`
     }
   }
 `
+export const GET_ALL_COUNTRIES = gql`
+  query GetAllCountries {
+    countries {
+      code
+      name
+      emoji
+      emojiU
+    }
+  }
+`;
+
+export const GET_COUNTRY_DETAILS = gql`
+  query GetCountryDetails($code: ID!) {
+    country(code: $code) {
+      continent {
+        name
+      }
+      currency
+      emojiU
+      emoji
+      name
+      native
+      phone
+      states {
+        name
+      }
+    }
+  }
+`;

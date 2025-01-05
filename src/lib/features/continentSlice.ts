@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetContinentsWithCountriesType, GetContinentWithCountriesType, GetCountriesAndLanguagesType } from "@/types/queries";
+import { GetContinentsWithCountriesType, GetContinentWithCountriesType, GetCountriesAndLanguagesType, LanguageCountType } from "@/types/queries";
 
 // Define the type for the slice state
 interface ContinentState {
   selectedContinentCode: string;
   allContinentsData: GetContinentsWithCountriesType | undefined;
   selectedContinentData: GetContinentWithCountriesType | undefined;
-  allContinentsLanguageCount: GetCountriesAndLanguagesType | undefined
+  continentLanguageCount: LanguageCountType | undefined
   loading: boolean;
   error: string | null;
 }
@@ -15,7 +15,7 @@ const initialState: ContinentState = {
   selectedContinentCode: "all",
   allContinentsData: undefined,
   selectedContinentData: undefined,
-  allContinentsLanguageCount: undefined,
+  continentLanguageCount: undefined,
   loading: false,
   error: null,
 };
@@ -39,8 +39,9 @@ const continentSlice = createSlice({
     setSelectedContinentCode: (state, action: PayloadAction<string>) => {
       state.selectedContinentCode = action.payload;
     },
-    setAllContinentsLanugageCount: (state, action: PayloadAction<GetCountriesAndLanguagesType | undefined>) => {
-      state.allContinentsLanguageCount = action.payload;
+    setLanugageCount: (state, action: PayloadAction<LanguageCountType | undefined>) => {
+      console.log("payload", action.payload)
+      state.continentLanguageCount = action.payload;
     },
   },
 });
@@ -51,7 +52,7 @@ export const {
   setAllContinentsData,
   setSelectedContinentData,
   setSelectedContinentCode,
-  setAllContinentsLanugageCount,
+  setLanugageCount,
 } = continentSlice.actions;
 
 export default continentSlice.reducer;

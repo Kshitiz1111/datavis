@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { setAllContinentsData, setAllContinentsLanugageCount, setSelectedContinentCode, setSelectedContinentData } from "@/lib/features/continentSlice";
+import { setAllContinentsData, setSelectedContinentCode, setSelectedContinentData } from "@/lib/features/continentSlice";
 import CountryContinentBarGraph from "@/components/CountryContinentBarGraph";
 import ContinentInfo from "@/components/ContinentInfo";
 import LanguageCircleChart from "@/components/LanguageCircleChart";
@@ -21,25 +21,18 @@ import LanguageCircleChart from "@/components/LanguageCircleChart";
 
 const ContinentCon = () => {
   const dispatch = useAppDispatch();
-  const { selectedContinentCode, allContinentsData, selectedContinentData, loading, allContinentsLanguageCount } = useAppSelector((state: RootState) => state.continent);
+  const { selectedContinentCode, allContinentsData, selectedContinentData, loading } = useAppSelector((state: RootState) => state.continent);
 
   const { loading: loadingContinentsCountriesList, error: errorContinentsCountries, data: ContinentsCountriesList } = useQuery<GetContinentsWithCountriesType | undefined>(GET_CONTINENTS_WITH_COUNTRIES, { skip: selectedContinentCode !== 'all' });
-
-  console.log("ContinentsCountriesList", ContinentsCountriesList)
 
   const { loading: loadingContinentList, error, data: continentList } = useQuery<GetContinentsType | undefined>(GET_CONTINENTS);
 
   const [fetchContinent, { loading: loadingContinent, data: continentData }] = useLazyQuery<GetContinentWithCountriesType>(GET_CONTINENT_WITH_COUNTRIES)
 
-  console.log("continentData", continentData)
-
-
-
   const handleSelectChange = (value: string) => {
     if (value !== "all") {
       fetchContinent({ variables: { code: value } })
     }
-    // localStorage.setItem("selectedContinentCode", value)
     dispatch(setSelectedContinentCode(value))
   }
 
@@ -54,22 +47,17 @@ const ContinentCon = () => {
     }
   }, [ContinentsCountriesList, continentData])
 
-
-
-  console.log("selectedContinentCode, allContinentsData, selectedContinentData, loading", selectedContinentCode, allContinentsData, selectedContinentData, loading)
-
-
   return (
     <div>
       <div className="flex justify-between items-center">
-        <span className="text-6xl font-semibold text-green-100">
+        <h1 className="text-xl font-semibold text-green-100">
           {
             (selectedContinentCode !== 'all') ?
               `${selectedContinentData?.continent?.name || ""} Continent`
               :
               "All Continents"
           }
-        </span>
+        </h1>
         <div>
           <Select onValueChange={(e) => {
             handleSelectChange(e)
@@ -95,16 +83,15 @@ const ContinentCon = () => {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:h-[400px] w-full gap-4">
+      <div className="flex flex-col sm:flex-row sm:h-[400px] w-full gap-2">
         <CountryContinentBarGraph data={allContinentsData || selectedContinentData || undefined} />
-
-        <div className="w-full sm:w-1/2 h-auto sm:h-full m-0 sm:m-4">
+        <div className="w-full sm:w-1/2 h-fit sm:h-full" style={{ marginTop: "1rem" }}>
           <ContinentInfo data={allContinentsData || selectedContinentData || undefined} />
         </div>
       </div>
 
-      <div>
-        <LanguageCircleChart data={allContinentsLanguageCount | undefined} />
+      <div className="py-4" style={{ marginTop: "2rem" }}>
+        <LanguageCircleChart continentCode={selectedContinentCode} />
       </div>
     </div>
   )
