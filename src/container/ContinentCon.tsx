@@ -34,10 +34,13 @@ const ContinentCon = () => {
     }
     dispatch(setSelectedContinentCode(value))
   }
+
   console.log(loadingContinentsCountriesList,
     errorContinentsCountries,
     error,
     loadingContinent,)
+
+
   useEffect(() => {
     if (selectedContinentCode !== 'all' && continentData) {
       dispatch(setSelectedContinentData(continentData))
